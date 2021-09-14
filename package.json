@@ -1,0 +1,29 @@
+{
+  "name": "stripe-payment",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "To test stripe",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/roopali-singh/stripe-payment-check.git"
+  },
+  "keywords": [
+    "payment",
+    "stripe"
+  ],
+  "author": "Roopali Singh",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/roopali-singh/stripe-payment-check/issues"
+  },
+  "homepage": "https://github.com/roopali-singh/stripe-payment-check#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "express-async-handler": "^1.1.4",
+    "nodemon": "^2.0.12"
+  }
+}
