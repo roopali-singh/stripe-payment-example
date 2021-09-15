@@ -3,7 +3,7 @@ import expressAsyncHandler from "express-async-handler";
 import data from "./moonData.js";
 import stripe from "stripe";
 
-const stripe = stripe("	sk_test_tR3PYbcVNZZ796tH88S4VQ2u");
+// const stripe = stripe("	sk_test_tR3PYbcVNZZ796tH88S4VQ2u");
 
 const app = express();
 
