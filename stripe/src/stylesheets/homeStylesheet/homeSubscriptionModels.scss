@@ -1,0 +1,57 @@
+$margin-bottom: 10%;
+$border-dark: #795337;
+$border-light: #a2714b;
+
+.homeSubsModels {
+  box-sizing: border-box;
+  border: thick solid $border-light;
+  border-radius: 7px;
+  width: 20%;
+  min-width: 130px;
+  height: 30%;
+  min-height: 200px;
+  max-height: 500px;
+  margin: 3%;
+  padding: 3%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+// https://source.unsplash.com/500x500/?moon,full
+.homeSubsModels__img {
+  flex: 3;
+  margin-bottom: $margin-bottom;
+  width: 100%;
+  height: auto;
+  // max-height: 200px;
+  object-fit: cover;
+}
+
+.homeSubsModels__title {
+  flex: 1;
+  margin-bottom: $margin-bottom;
+  white-space: pre-wrap;
+}
+
+.homeSubsModels__amount {
+  flex: 2;
+  margin-bottom: $margin-bottom;
+  font-size: 2em;
+  text-align: center;
+}
+
+.homeSubsModels__amount--input {
+  box-sizing: border-box;
+  width: 84%;
+  font-size: 2rem;
+}
+
+@media only screen and (max-width: 844px) {
+  .homeSubsModels__title,
+  .homeSubsModels__amount,
+  .homeSubsModels__amount--input {
+    font-size: 11px;
+  }
+}

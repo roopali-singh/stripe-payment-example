@@ -1,0 +1,39 @@
+.homeCircle {
+  width: 10%;
+  min-width: 70px;
+  height: auto;
+  position: absolute;
+  left: 45%;
+  bottom: -10vh;
+  // bottom: -22%;
+}
+
+.checkoutCircle {
+  width: 32px;
+  height: auto;
+}
+
+.circle__img {
+  border: 0.2em solid white;
+  border-radius: 50%;
+  object-fit: cover;
+  width: 100%;
+  height: auto;
+}
+
+.homeCircle__img {
+  box-shadow: 5px 5px 100px 1px black;
+}
+
+@media only screen and (max-width: 1000px) {
+  .homeCircle {
+    bottom: -10%;
+  }
+}
+
+@media only screen and (min-width: 2499px) {
+  .checkoutCircle {
+    width: 52px;
+    height: auto;
+  }
+}

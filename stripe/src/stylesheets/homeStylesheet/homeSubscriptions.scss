@@ -1,0 +1,12 @@
+$screen-width: 1600px;
+
+.homeSubs {
+  width: 100%;
+  max-width: $screen-width;
+  margin: 2%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start;
+}

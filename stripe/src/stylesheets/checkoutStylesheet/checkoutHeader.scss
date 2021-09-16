@@ -1,0 +1,63 @@
+$bgColor-light: #e1f0fa;
+$bgColor-dark: #004c81;
+$para-color: rgb(36, 30, 18);
+$screen-width: 1600px;
+
+%flex-row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.checkoutHeader {
+  padding: 0.3%;
+  background-color: $bgColor-light;
+  @extend %flex-row;
+  justify-content: center;
+}
+
+.checkoutHeader--forFooter {
+  width: 100%;
+  padding: 0.7% !important;
+}
+
+.checkoutHeader__center {
+  width: 100%;
+  max-width: $screen-width;
+  text-align: center;
+  @extend %flex-row;
+  justify-content: space-between;
+}
+
+.checkoutHeader__para {
+  color: $para-color;
+  font-weight: 500;
+
+  span {
+    color: $bgColor-dark;
+    text-decoration: underline;
+  }
+}
+
+.footer__link {
+  color: $bgColor-dark;
+}
+
+@media only screen and (max-width: 844px) {
+  .checkoutHeader__para {
+    font-size: 11px;
+  }
+}
+
+@media only screen and (max-width: 280px) {
+  .footer__para {
+    display: none;
+  }
+}
+
+@media only screen and (min-width: 2500px) {
+  .checkoutHeader__para {
+    font-size: 20px;
+  }
+}
