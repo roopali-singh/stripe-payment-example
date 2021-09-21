@@ -16,13 +16,14 @@ function CheckoutPayment({ amount }) {
   const [success, setSuccess] = useState(false);
 
   useEffect(() => {
-    function getClientSecret(total) {
+    async function getClientSecret(total) {
       try {
-        const response = axios.post(`/api/payment/create?total=${total * 100}`);
+        const response = await axios.post(
+          `/api/payment/create?total=${total * 100}`
+        );
 
         setClientSecret(response.data.clientSecret);
       } catch (error) {
-        console.log("error payment 🍎 🍎 🍎 🍎 🍎  => ", error.message);
         setErrorMsg(error.message);
       }
     }

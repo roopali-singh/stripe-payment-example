@@ -1,8 +1,10 @@
 import express from "express";
 import expressAsyncHandler from "express-async-handler";
 import data from "./moonData.js";
+import dotenv from "dotenv";
 import Stripe from "stripe";
 
+dotenv.config();
 const stripeSecretPromise = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 const app = express();
@@ -33,7 +35,7 @@ app.post(
       receipt_email: "roopali.singh.222@gmail.com",
     });
 
-    response.status(200).send({ clientSecret: paymentIntent.client_secret });
+    response.status(201).send({ clientSecret: paymentIntent.client_secret });
   })
 );
 
