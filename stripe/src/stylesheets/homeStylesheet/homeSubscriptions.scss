@@ -10,3 +10,23 @@ $screen-width: 1600px;
   justify-content: center;
   align-items: flex-start;
 }
+
+.error_msg {
+  // border: 1px solid rgb(207, 66, 66);
+  border-radius: 3px;
+  text-align: center;
+  padding: 15px;
+  margin-bottom: 10px;
+  background-color: rgb(231, 201, 201);
+  color: rgb(207, 66, 66);
+  font-family: "Numans", sans-serif;
+  font-size: 0.83em;
+  font-weight: bolder;
+}
+
+@media only screen and (max-width: 844px) {
+  .error_msg {
+    font-size: 11px;
+    padding: 3%;
+  }
+}

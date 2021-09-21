@@ -2,34 +2,21 @@ import React from "react";
 import { useHistory } from "react-router-dom";
 import "../../stylesheets/sharedStylesheet/button.scss";
 
-function Button({ title, amountValue, phaseInfo, subscribe }) {
+function Button({ amountValue, phaseInfo }) {
   const history = useHistory();
 
-  function paymentHandler() {
-    history.push("/");
-  }
+  ///////////////////////////// SUBSCRIPTION HANDLER //////////////////////////////////
 
-  function subscriptionHandler() {
+  function subscriptionHandler(e) {
+    e.preventDefault();
     history.push(
       `/checkout?amount=${amountValue}&phase=${phaseInfo?.phaseName}&phaseE=${phaseInfo?.phaseEmoji}`
     );
   }
 
-  function buttonHandler(e) {
-    e.preventDefault();
-    if (subscribe && amountValue) {
-      subscriptionHandler();
-    } else {
-      paymentHandler();
-    }
-  }
-
   return (
-    <div
-      className={`button ${subscribe ? "subscribeButton" : "paymentButton"}`}
-      onClick={buttonHandler}
-    >
-      {title}
+    <div className="button subscribeButton" onClick={subscriptionHandler}>
+      Join
     </div>
   );
 }

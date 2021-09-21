@@ -45,6 +45,10 @@ $screen-width: 1600px;
 }
 
 @media only screen and (max-width: 844px) {
+  .checkoutHeader--forFooter {
+    padding: 1.8% !important;
+  }
+
   .checkoutHeader__para {
     font-size: 11px;
   }

@@ -13,9 +13,7 @@ function HomeSubscriptions() {
         const { data } = await axios.get("/api/moonData/seed");
         setMoonPhase(data);
       } catch (error) {
-        setErrorMsg(error);
-        console.log("error => ", error);
-        console.log("errorMsg => ", errorMsg);
+        setErrorMsg(error.message);
       }
     }
     listPhases();
@@ -23,6 +21,12 @@ function HomeSubscriptions() {
 
   return (
     <div className="homeSubs">
+      {errorMsg && (
+        <div className="error_msg">
+          <strong>{errorMsg}</strong>
+        </div>
+      )}
+
       {moonPhase?.moonPhase?.map((phase) => (
         <HomeSubscriptionModels key={phase?._id} phase={phase} />
       ))}

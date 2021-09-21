@@ -35,10 +35,8 @@ function HomeSubscriptionModels({ phase }) {
         </p>
       )}
       <Button
-        title="Join"
         amountValue={phase?.amount ? phase?.amount : amountInput}
         phaseInfo={phaseInfo}
-        subscribe
       />
     </main>
   );

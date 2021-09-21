@@ -1,9 +1,9 @@
 import express from "express";
 import expressAsyncHandler from "express-async-handler";
 import data from "./moonData.js";
-import stripe from "stripe";
+import Stripe from "stripe";
 
-// const stripe = stripe("	sk_test_tR3PYbcVNZZ796tH88S4VQ2u");
+const stripeSecretPromise = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 const app = express();
 
@@ -15,6 +15,25 @@ app.get(
   "/api/moonData/seed",
   expressAsyncHandler(async (request, response) => {
     response.status(200).send(data);
+  })
+);
+
+app.post(
+  "/api/payment/create",
+  expressAsyncHandler(async (request, response) => {
+    // const phase = request.body.paymentInfo;
+    const total = request.query.total;
+
+    console.log("Payment Request received for ", total, " rupees.");
+
+    const paymentIntent = await stripeSecretPromise.paymentIntents.create({
+      amount: total,
+      currency: "inr",
+      description: `Payment for ${total}`,
+      receipt_email: "roopali.singh.222@gmail.com",
+    });
+
+    response.status(200).send({ clientSecret: paymentIntent.client_secret });
   })
 );
 
