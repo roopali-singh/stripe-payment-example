@@ -12,6 +12,7 @@ $button-light: #a2714b;
   cursor: pointer;
   border: 2px solid $button-dark;
   border-radius: 2px;
+  white-space: pre-wrap;
 
   &:hover {
     background-color: $button-dark;

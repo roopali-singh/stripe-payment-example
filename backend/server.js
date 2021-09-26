@@ -26,8 +26,6 @@ app.post(
     // const phase = request.body.paymentInfo;
     const total = request.query.total;
 
-    console.log("Payment Request received for ", total, " rupees.");
-
     const paymentIntent = await stripeSecretPromise.paymentIntents.create({
       amount: total,
       currency: "inr",

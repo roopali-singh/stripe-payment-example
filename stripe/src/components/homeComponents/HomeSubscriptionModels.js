@@ -29,6 +29,7 @@ function HomeSubscriptionModels({ phase }) {
             className="homeSubsModels__amount--input"
             type="number"
             value={amountInput}
+            step="0.01"
             min="30"
             onChange={(e) => setAmountInput(e.target.value)}
           />

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
 import "../../stylesheets/checkoutStylesheet/checkoutPayment.scss";
 // import Button from "../sharedComponents/Button";
 import "../../stylesheets/sharedStylesheet/button.scss";
@@ -7,10 +8,12 @@ import axios from "axios";
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 
 function CheckoutPayment({ amount }) {
+  const history = useHistory();
   const stripe = useStripe();
   const elements = useElements();
 
   const [clientSecret, setClientSecret] = useState("");
+  const [disabled, setDisabled] = useState(true);
   const [errorMsg, setErrorMsg] = useState("");
   const [processing, setProcessing] = useState(false);
   const [success, setSuccess] = useState(false);
@@ -30,40 +33,43 @@ function CheckoutPayment({ amount }) {
     getClientSecret(amount);
   }, [amount]);
 
-  console.log("THE SECRET IS 1111111 >>>> ", clientSecret);
+  ///////////////////////////// PAYMENT HANDLER //////////////////////////////////
+
+  function handleChange(event) {
+    setDisabled(event.empty);
+    setErrorMsg(event.error ? event.error.message : "");
+  }
 
   ///////////////////////////// PAYMENT HANDLER //////////////////////////////////
 
   async function paymentHandler(e) {
     // history.push("/");
-    console.log("clicked");
     e.preventDefault();
-    if (!stripe || !elements) {
+    if (!stripe || !elements || errorMsg || disabled) {
       // Stripe.js has not loaded yet. Make sure to disable
       // form submission until Stripe.js has loaded.
       return;
+    } else {
+      setProcessing(true);
+      const payload = await stripe
+        .confirmCardPayment(clientSecret, {
+          payment_method: {
+            card: elements.getElement(CardElement),
+          },
+        })
+        .then(({ paymentIntent }) => {
+          setErrorMsg(false);
+          setProcessing(false);
+          setSuccess(true);
+        });
+      history.replace("/");
     }
-    setProcessing(true);
-    console.log("THE SECRET IS 2222222 >>>> ", clientSecret);
-    const payload = await stripe
-      .confirmCardPayment(clientSecret, {
-        payment_method: {
-          card: elements.getElement(CardElement),
-        },
-      })
-      .then(({ paymentIntent }) => {
-        console.log("🍎 REACHED TILL HERE 🍏 ");
-        console.log(paymentIntent.amount);
-        console.log(paymentIntent.created);
-        setErrorMsg(null);
-        setProcessing(false);
-        setSuccess(true);
-      });
   }
 
   return (
     <div className="payment">
       <CardElement
+        onChange={handleChange}
         options={{
           style: {
             base: {
@@ -79,13 +85,14 @@ function CheckoutPayment({ amount }) {
           },
         }}
       />
+      {errorMsg && <div className="errorMsg">{errorMsg}</div>}
       <div
         className="button paymentButton"
         onClick={paymentHandler}
         // disabled={processing || disabled || success}
-        disabled={!stripe || !elements}
+        disabled={!stripe || !elements || disabled || processing || success}
       >
-        Pay now
+        {processing ? "Processing" : success ? "Payment Completed" : "Pay now"}
       </div>
       <p className="payment__para">Stripe Payment</p>
     </div>

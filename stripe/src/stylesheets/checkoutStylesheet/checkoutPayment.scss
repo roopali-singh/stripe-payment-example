@@ -11,8 +11,27 @@
   flex: 1;
 }
 
+.errorMsg {
+  // border: 1px solid rgb(207, 66, 66);
+  border-radius: 3px;
+  text-align: center;
+  padding: 15px;
+  margin-bottom: 10px;
+  background-color: rgb(231, 201, 201);
+  color: rgb(207, 66, 66);
+  font-family: "Numans", sans-serif;
+  font-size: 0.83em;
+  font-weight: bolder;
+  margin-top: 10px;
+}
+
 @media only screen and (max-width: 844px) {
   .payment__para {
     font-size: 11px;
+  }
+
+  .errorMsg {
+    font-size: 11px;
+    padding: 3%;
   }
 }
