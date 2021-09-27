@@ -1,6 +1,7 @@
 import express from "express";
 import expressAsyncHandler from "express-async-handler";
 import data from "./moonData.js";
+import path from "path";
 import dotenv from "dotenv";
 import Stripe from "stripe";
 
@@ -36,6 +37,13 @@ app.post(
     response.status(201).send({ clientSecret: paymentIntent.client_secret });
   })
 );
+
+const __dirname = path.resolve();
+app.use(express.static(path.join(__dirname, "/stripe/build")));
+
+app.get("*", (request, response) => {
+  response.sendFile(path.join(__dirname, "/stripe/build/index.html"));
+});
 
 app.use((error, request, response, next) => {
   response.status(500).send({
