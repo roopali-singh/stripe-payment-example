@@ -24,7 +24,7 @@ function HomeSubscriptionModels({ phase }) {
         <p className="homeSubsModels__amount">${phase?.amount}</p>
       ) : (
         <p className="homeSubsModels__amount">
-          $
+          ₹
           <input
             className="homeSubsModels__amount--input"
             type="number"
