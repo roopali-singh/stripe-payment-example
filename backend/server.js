@@ -10,9 +10,11 @@ const stripeSecretPromise = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 const app = express();
 
-app.get("/", (request, response) => {
-  response.send("Server is ready");
-});
+// ---------------- AFTER HOSTING => NOT NEEDED ------------------------
+// app.get("/", (request, response) => {
+//   response.send("Server is ready");
+// });
+//----------------------------------------------------------------------
 
 app.get(
   "/api/moonData/seed",
