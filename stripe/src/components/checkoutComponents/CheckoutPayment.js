@@ -30,7 +30,10 @@ function CheckoutPayment({ amount }) {
         setErrorMsg(error.message);
       }
     }
-    getClientSecret(amount);
+
+    if (typeof amount === "number" && amount > 0) {
+      getClientSecret(amount);
+    }
   }, [amount]);
 
   ///////////////////////////// PAYMENT HANDLER //////////////////////////////////

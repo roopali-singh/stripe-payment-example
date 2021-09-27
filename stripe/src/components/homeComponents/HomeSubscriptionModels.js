@@ -21,7 +21,7 @@ function HomeSubscriptionModels({ phase }) {
         alt={phase?.name}
       />
       {phase?.amount ? (
-        <p className="homeSubsModels__amount">${phase?.amount}</p>
+        <p className="homeSubsModels__amount">₹{phase?.amount}</p>
       ) : (
         <p className="homeSubsModels__amount">
           ₹
