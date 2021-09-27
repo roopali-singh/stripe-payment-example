@@ -94,7 +94,7 @@ function CheckoutPayment({ amount }) {
       >
         {processing ? "Processing" : success ? "Payment Completed" : "Pay now"}
       </div>
-      <p className="payment__para">Stripe Payment</p>
+      <p className="payment__para">We are not storing your card info</p>
     </div>
   );
 }
