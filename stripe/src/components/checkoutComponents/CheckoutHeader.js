@@ -7,7 +7,7 @@ import circleImg from "../../assets/circle.jfif";
 
 function CheckoutHeader() {
   const location = useLocation();
-  const [phaseName, setPhaseName] = useState("New");
+  const [phaseName, setPhaseName] = useState("No");
   const [phaseEmoji, setPhaseEmoji] = useState("🌑");
 
   useEffect(() => {
@@ -20,7 +20,7 @@ function CheckoutHeader() {
       setPhaseName(phaseN);
       setPhaseEmoji(phaseE);
     } else {
-      setPhaseName("New");
+      setPhaseName("No");
       setPhaseEmoji("🌑");
     }
   }, [location]);

@@ -14,7 +14,7 @@ CheckoutDetails
 
 function CheckoutDetails() {
   const location = useLocation();
-  const [amountValue, setAmountValue] = useState(1);
+  const [amountValue, setAmountValue] = useState();
 
   useEffect(() => {
     const searchParams = new URLSearchParams(location.search);
@@ -23,7 +23,7 @@ function CheckoutDetails() {
       const amount = searchParams.get("amount");
       setAmountValue(parseInt(amount, 10));
     } else {
-      setAmountValue(1);
+      setAmountValue(null);
     }
   }, [location]);
 
