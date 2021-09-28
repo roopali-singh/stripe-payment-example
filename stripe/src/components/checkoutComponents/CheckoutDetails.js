@@ -21,7 +21,7 @@ function CheckoutDetails() {
 
     if (searchParams.has("amount")) {
       const amount = searchParams.get("amount");
-      setAmountValue(parseInt(amount, 10));
+      setAmountValue(parseFloat(amount, 10));
     } else {
       setAmountValue(null);
     }
