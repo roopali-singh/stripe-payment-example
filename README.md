@@ -15,7 +15,8 @@ Tech stack used:
 ```
 - Heroku for deployment
 ```
-> To test you need to enter the real account details.
-> Just drop a msg for refund at [@codebird](https://www.instagram.com/codebird/)
+> #####To test you need to enter the real account details.
+
+> #####Just drop a msg for refund at [@codebird](https://www.instagram.com/codebird/)
 
 ###### The UI was inspired by [patreon](https://www.patreon.com/)
