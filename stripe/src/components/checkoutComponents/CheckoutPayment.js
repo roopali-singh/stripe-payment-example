@@ -62,7 +62,6 @@ function CheckoutPayment({ amount }) {
       return;
     } else {
       setProcessing(true);
-      // const payload =
       await stripe
         .confirmCardPayment(clientSecret, {
           payment_method: {

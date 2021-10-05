@@ -16,6 +16,7 @@ const app = express();
 // });
 //----------------------------------------------------------------------
 
+////// Getting the data for the webapp //////
 app.get(
   "/api/moonData/seed",
   expressAsyncHandler(async (request, response) => {
@@ -23,10 +24,10 @@ app.get(
   })
 );
 
+////// Getting client secret //////
 app.post(
   "/api/payment/create",
   expressAsyncHandler(async (request, response) => {
-    // const phase = request.body.paymentInfo;
     const total = request.query.total;
 
     const paymentIntent = await stripeSecretPromise.paymentIntents.create({
@@ -40,6 +41,7 @@ app.post(
   })
 );
 
+////// Required for publishing to heroku //////
 const __dirname = path.resolve();
 app.use(express.static(path.join(__dirname, "/stripe/build")));
 
@@ -47,6 +49,7 @@ app.get("*", (request, response) => {
   response.sendFile(path.join(__dirname, "/stripe/build/index.html"));
 });
 
+////// Error Handling //////
 app.use((error, request, response, next) => {
   response.status(500).send({
     message:
@@ -56,6 +59,7 @@ app.use((error, request, response, next) => {
   });
 });
 
+////// Listen API for port //////
 const port = process.env.PORT || 5000;
 
 app.listen(port, () => {
