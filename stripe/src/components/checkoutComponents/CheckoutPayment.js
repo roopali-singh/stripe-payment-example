@@ -36,7 +36,7 @@ function CheckoutPayment({ amount }) {
     }
   }, [amount]);
 
-  ///////////////////////////// PAYMENT CHANGE HANDLER //////////////////////////////////
+  ///////////////////////////// AFTER PAYMENT SUBMISSION //////////////////////////////////
 
   useEffect(() => {
     if (success) {

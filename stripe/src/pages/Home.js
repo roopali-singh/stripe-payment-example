@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import "../stylesheets/homeStylesheet/Home.scss";
 import HomeBanner from "../components/homeComponents/HomeBanner";
@@ -20,44 +20,54 @@ Home
 */
 
 function Home() {
-  const location = useLocation();
-  const [getSuccess, setGetSuccess] = useState(false);
-
   ///////// FOR SUCCESSFUL PAYMENTS NOTIFICATION /////////////
+
+  const location = useLocation();
+
+  function paymentConfirm() {
+    toast.success("Payment Successful!", {
+      duration: 4000,
+      style: {
+        border: "1px solid #713200",
+        padding: "16px",
+        color: "#713200",
+      },
+      iconTheme: {
+        primary: "green",
+        secondary: "#FFFAEE",
+      },
+    });
+  }
+
+  function paymentFailed() {
+    toast.error("Payment Failed!", {
+      duration: 4000,
+      style: {
+        border: "1px solid rgb(207, 66, 66)",
+        padding: "16px",
+        color: "rgb(207, 66, 66)",
+      },
+      iconTheme: {
+        primary: "rgb(207, 66, 66)",
+        secondary: "rgb(231, 201, 201)",
+      },
+    });
+  }
 
   useEffect(() => {
     const searchParams = new URLSearchParams(location.search);
 
     if (searchParams.has("success")) {
       const success = searchParams.get("success");
-      setGetSuccess(success);
-    } else {
-      setGetSuccess(false);
+      if (success === "true") {
+        paymentConfirm();
+      } else {
+        paymentFailed();
+      }
     }
-  });
+  }, [location.search, location]);
 
-  useEffect(() => {
-    function notify() {
-      toast.success("Payment Successfully!", {
-        duration: 4000,
-        style: {
-          border: "1px solid #713200",
-          padding: "16px",
-          color: "#713200",
-        },
-        iconTheme: {
-          primary: "#713200",
-          secondary: "#FFFAEE",
-        },
-      });
-    }
-
-    if (getSuccess) {
-      notify();
-    }
-  }, [getSuccess]);
-
-  //////////////////////////////////////////////
+  //////////////////////////////////////////////////////////
 
   return (
     <div className="home">
