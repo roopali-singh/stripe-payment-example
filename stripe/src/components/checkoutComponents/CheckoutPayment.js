@@ -36,14 +36,22 @@ function CheckoutPayment({ amount }) {
     }
   }, [amount]);
 
-  ///////////////////////////// PAYMENT HANDLER //////////////////////////////////
+  ///////////////////////////// PAYMENT CHANGE HANDLER //////////////////////////////////
+
+  useEffect(() => {
+    if (success) {
+      history.replace(`/?success=${success}`);
+    }
+  }, [success, history]);
+
+  ///////////////////////////// PAYMENT CHANGE HANDLER //////////////////////////////////
 
   function handleChange(event) {
     setDisabled(event.empty);
     setErrorMsg(event.error ? event.error.message : "");
   }
 
-  ///////////////////////////// PAYMENT HANDLER //////////////////////////////////
+  ///////////////////////////// PAYMENT SUBMIT HANDLER //////////////////////////////////
 
   async function paymentHandler(e) {
     // history.push("/");
@@ -54,18 +62,24 @@ function CheckoutPayment({ amount }) {
       return;
     } else {
       setProcessing(true);
-      const payload = await stripe
+      // const payload =
+      await stripe
         .confirmCardPayment(clientSecret, {
           payment_method: {
             card: elements.getElement(CardElement),
+            billing_details: {
+              name: "MOON",
+            },
           },
+          //save card info
+          // setup_future_usage: "off_session",
         })
         .then(({ paymentIntent }) => {
           setErrorMsg(false);
           setProcessing(false);
           setSuccess(true);
         });
-      history.replace("/");
+      // history.replace("/paymentConfirm");
     }
   }
 
@@ -89,6 +103,9 @@ function CheckoutPayment({ amount }) {
         }}
       />
       {errorMsg && <div className="errorMsg">{errorMsg}</div>}
+
+      {/* /////////////////////// PAYMENT BUTTON //////////////////////// */}
+
       <div
         className="button paymentButton"
         onClick={paymentHandler}

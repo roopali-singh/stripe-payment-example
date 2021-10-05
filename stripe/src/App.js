@@ -3,6 +3,7 @@ import "./App.scss";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Checkout from "./pages/Checkout";
+import Confirm from "./pages/Confirm";
 import Footer from "./components/sharedComponents/Footer";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
@@ -19,16 +20,20 @@ function App() {
     <Router>
       <div className="app">
         <Switch>
+          <Route path="/paymentConfirm">
+            <Confirm />
+          </Route>
           <Route path="/checkout">
             <Elements stripe={stripePromise}>
               <Checkout />
             </Elements>
+            <Footer />
           </Route>
           <Route path="/">
             <Home />
+            <Footer />
           </Route>
         </Switch>
-        <Footer />
       </div>
     </Router>
   );
