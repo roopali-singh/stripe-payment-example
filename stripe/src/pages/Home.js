@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useHistory } from "react-router-dom";
 import "../stylesheets/homeStylesheet/Home.scss";
 import HomeBanner from "../components/homeComponents/HomeBanner";
 import HomeTitle from "../components/homeComponents/HomeTitle";
@@ -23,6 +23,7 @@ function Home() {
   ///////// FOR SUCCESSFUL PAYMENTS NOTIFICATION /////////////
 
   const location = useLocation();
+  const history = useHistory();
 
   function paymentConfirm() {
     toast.success("Payment Successful!", {
@@ -55,17 +56,38 @@ function Home() {
   }
 
   useEffect(() => {
-    const searchParams = new URLSearchParams(location.search);
+    // const searchParams = new URLSearchParams(location.search);
 
-    if (searchParams.has("success")) {
-      const success = searchParams.get("success");
-      if (success === "true") {
+    // if (searchParams.has("success")) {
+    //   const success = searchParams.get("success");
+    //   if (success === "true") {
+    //     paymentConfirm();
+    //   } else {
+    //     paymentFailed();
+    //   }
+    // }
+
+    if (location?.state && location?.state?.success) {
+      const searchState = location?.state?.success;
+      if (searchState === "true") {
         paymentConfirm();
       } else {
         paymentFailed();
       }
     }
-  }, [location.search, location]);
+  }, [location, location?.state]);
+
+  useEffect(() => {
+    const handleReload = () => {
+      if (location?.state && location?.state?.success) {
+        history.replace(location.pathname, null);
+      }
+    };
+    window.addEventListener("load", handleReload);
+    return () => {
+      window.removeEventListener("load", handleReload);
+    };
+  }, [window.onLoad]);
 
   //////////////////////////////////////////////////////////
 

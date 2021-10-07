@@ -18,6 +18,8 @@ function CheckoutPayment({ amount }) {
   const [processing, setProcessing] = useState(false);
   const [success, setSuccess] = useState(false);
 
+  ///////////////////////////// GETTING CLIENT SECRET //////////////////////////////////
+
   useEffect(() => {
     async function getClientSecret(total) {
       try {
@@ -40,7 +42,8 @@ function CheckoutPayment({ amount }) {
 
   useEffect(() => {
     if (success) {
-      history.replace(`/?success=${success}`);
+      // history.replace(`/?success=${success}`);
+      history.replace({ pathname: "/", state: { success: `${success}` } });
     }
   }, [success, history]);
 
