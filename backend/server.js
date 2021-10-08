@@ -33,6 +33,7 @@ app.post(
     const paymentIntent = await stripeSecretPromise.paymentIntents.create({
       amount: total,
       currency: "inr",
+      payment_method_types: ["card"],
       description: `Payment for ${total}`,
       receipt_email: "roopali.singh.222@gmail.com",
     });

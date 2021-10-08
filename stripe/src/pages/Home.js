@@ -56,17 +56,6 @@ function Home() {
   }
 
   useEffect(() => {
-    // const searchParams = new URLSearchParams(location.search);
-
-    // if (searchParams.has("success")) {
-    //   const success = searchParams.get("success");
-    //   if (success === "true") {
-    //     paymentConfirm();
-    //   } else {
-    //     paymentFailed();
-    //   }
-    // }
-
     if (location?.state && location?.state?.success) {
       const searchState = location?.state?.success;
       if (searchState === "true") {
@@ -78,16 +67,18 @@ function Home() {
   }, [location, location?.state]);
 
   useEffect(() => {
-    const handleReload = () => {
+    const handleReload = (event) => {
       if (location?.state && location?.state?.success) {
+        event.preventDefault();
         history.replace(location.pathname, null);
+        // event.returnValue = "";
       }
     };
-    window.addEventListener("load", handleReload);
+    window.addEventListener("beforeunload", handleReload);
     return () => {
-      window.removeEventListener("load", handleReload);
+      window.removeEventListener("beforeunload", handleReload);
     };
-  }, [window.onLoad]);
+  }, [location, location?.state]);
 
   //////////////////////////////////////////////////////////
 
