@@ -16,7 +16,7 @@ const app = express();
 // });
 //----------------------------------------------------------------------
 
-////// Getting the data for the webapp //////
+///////////// Getting the data for the webapp /////////////
 app.get(
   "/api/moonData/seed",
   expressAsyncHandler(async (request, response) => {
@@ -24,7 +24,7 @@ app.get(
   })
 );
 
-////// Getting client secret //////
+///////////// Getting client secret /////////////
 app.post(
   "/api/payment/create",
   expressAsyncHandler(async (request, response) => {
@@ -38,11 +38,37 @@ app.post(
       receipt_email: "roopali.singh.222@gmail.com",
     });
 
-    response.status(201).send({ clientSecret: paymentIntent.client_secret });
+    response.status(201).send({
+      clientSecret: paymentIntent.client_secret,
+      id: paymentIntent.id,
+    });
+    // response.status(201).send({ clientSecret: paymentIntent.client_secret });
   })
 );
 
-////// Required for publishing to heroku //////
+///////////// Updating client secret /////////////
+app.post(
+  "/api/payment/update",
+  expressAsyncHandler(async (request, response) => {
+    const total = request.query.total;
+    const id = request.query.id;
+
+    const paymentIntent = await stripeSecretPromise.paymentIntents.update(id, {
+      amount: total,
+      currency: "inr",
+      payment_method_types: ["card"],
+      description: `Updated payment info for ${total}`,
+      receipt_email: "roopali.singh.222@gmail.com",
+    });
+
+    response.status(201).send({
+      clientSecret: paymentIntent.client_secret,
+      id: paymentIntent.id,
+    });
+  })
+);
+
+///////////// Required for publishing to heroku /////////////
 const __dirname = path.resolve();
 app.use(express.static(path.join(__dirname, "/stripe/build")));
 
@@ -50,7 +76,7 @@ app.get("*", (request, response) => {
   response.sendFile(path.join(__dirname, "/stripe/build/index.html"));
 });
 
-////// Error Handling //////
+///////////// Error Handling /////////////
 app.use((error, request, response, next) => {
   response.status(500).send({
     message:

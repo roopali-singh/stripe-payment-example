@@ -55,16 +55,23 @@ function Home() {
     });
   }
 
+  //////////////////// CHECKING LOCATION STATE ////////////////////////
+
   useEffect(() => {
     if (location?.state && location?.state?.success) {
       const searchState = location?.state?.success;
       if (searchState === "true") {
         paymentConfirm();
+        //----------------- REMOVING SESSION STORAGE ------------------
+        sessionStorage.removeItem("stripe_clientSecret");
+        sessionStorage.removeItem("id");
       } else {
         paymentFailed();
       }
     }
   }, [location, location?.state]);
+
+  //////////// REMOVING LOCATIN STATE on REFRESH ///////////////////
 
   useEffect(() => {
     const handleReload = (event) => {
@@ -78,7 +85,7 @@ function Home() {
     return () => {
       window.removeEventListener("beforeunload", handleReload);
     };
-  }, [location, location?.state]);
+  }, [location, location?.state, history]);
 
   //////////////////////////////////////////////////////////
 

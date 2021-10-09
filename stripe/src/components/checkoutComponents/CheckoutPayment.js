@@ -13,6 +13,7 @@ function CheckoutPayment({ amount }) {
   const elements = useElements();
 
   const [clientSecret, setClientSecret] = useState("");
+  const [id, setId] = useState("");
   const [disabled, setDisabled] = useState(true);
   const [errorMsg, setErrorMsg] = useState("");
   const [processing, setProcessing] = useState(false);
@@ -20,21 +21,53 @@ function CheckoutPayment({ amount }) {
 
   ///////////////////////////// GETTING CLIENT SECRET //////////////////////////////////
 
-  useEffect(() => {
-    async function getClientSecret(total) {
-      try {
-        const response = await axios.post(
-          `/api/payment/create?total=${total * 100}`
-        );
-
-        setClientSecret(response.data.clientSecret);
-      } catch (error) {
-        setErrorMsg(error.message);
-      }
+  async function getClientSecret(total) {
+    try {
+      const response = await axios.post(
+        `/api/payment/create?total=${total * 100}`
+      );
+      setClientSecret(response.data.clientSecret);
+      setId(response.data.id);
+      //----------------------- SETTING SESSION STORAGE -----------------------
+      sessionStorage.setItem(
+        "stripe_clientSecret",
+        JSON.stringify(response.data.clientSecret)
+      );
+      sessionStorage.setItem("stripe_id", JSON.stringify(response.data.id));
+    } catch (error) {
+      setErrorMsg(error.message);
     }
+  }
 
+  ///////////////////////////// UPDATING CLIENT SECRET //////////////////////////////////
+
+  async function updateClientSecret(total, id) {
+    try {
+      const response = await axios.post(
+        `/api/payment/update?total=${total * 100}&id=${id}`
+      );
+      setClientSecret(response.data.clientSecret);
+      setId(response.data.id);
+      //----------------------- SETTING SESSION STORAGE -----------------------
+      sessionStorage.setItem(
+        "stripe_clientSecret",
+        JSON.stringify(response.data.clientSecret)
+      );
+      sessionStorage.setItem("stripe_id", JSON.stringify(response.data.id));
+    } catch (error) {
+      setErrorMsg(error.message);
+    }
+  }
+
+  ///////////////////////////// choose GET NEW or UPDATE ?? //////////////////////////////////
+
+  useEffect(() => {
     if (typeof amount === "number" && amount > 0) {
-      getClientSecret(amount);
+      if (clientSecret && id) {
+        updateClientSecret(amount, id);
+      } else {
+        getClientSecret(amount);
+      }
     }
   }, [amount]);
 
@@ -71,6 +104,7 @@ function CheckoutPayment({ amount }) {
             card: elements.getElement(CardElement),
             billing_details: {
               name: "MOON",
+              email: "roopali.singh.222@gmail.com",
             },
           },
           //save card info
