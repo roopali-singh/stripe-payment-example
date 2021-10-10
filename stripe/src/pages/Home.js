@@ -76,14 +76,15 @@ function Home() {
 
   //////////// REMOVING LOCATION STATE on REFRESH ///////////////////
 
+  const handleReload = (event) => {
+    if (location?.state && location?.state?.success) {
+      event.preventDefault();
+      history.replace(location.pathname, null);
+      // event.returnValue = "";
+    }
+  };
+
   useEffect(() => {
-    const handleReload = (event) => {
-      if (location?.state && location?.state?.success) {
-        event.preventDefault();
-        history.replace(location.pathname, null);
-        // event.returnValue = "";
-      }
-    };
     window.addEventListener("beforeunload", handleReload);
     return () => {
       window.removeEventListener("beforeunload", handleReload);

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { useHistory } from "react-router-dom";
 import "../../stylesheets/checkoutStylesheet/checkoutPayment.scss";
 // import Button from "../sharedComponents/Button";
@@ -88,7 +88,7 @@ function CheckoutPayment({ amount }) {
         updateClientSecret(amount, cid);
       }
     }
-  }, [amount]);
+  }, [amount, cid]);
 
   ///////////////////////////// AFTER PAYMENT SUBMISSION //////////////////////////////////
 
@@ -101,18 +101,22 @@ function CheckoutPayment({ amount }) {
 
   ////////////////////// AFTER PAYMENT SUBMISSION -- STOP PAGE TRAVERSING ///////////////////////////
 
-  useEffect(() => {
-    const handleReload = (event) => {
+  const handleReload = useCallback(
+    (event) => {
       if (processing === true) {
         event.preventDefault();
         // event.returnValue = "";
       }
-    };
+    },
+    [processing]
+  );
+
+  useEffect(() => {
     window.addEventListener("beforeunload", handleReload);
     return () => {
       window.removeEventListener("beforeunload", handleReload);
     };
-  }, [location, location?.state, history]);
+  }, [handleReload]);
 
   ///////////////////////////// PAYMENT CHANGE HANDLER //////////////////////////////////
 
