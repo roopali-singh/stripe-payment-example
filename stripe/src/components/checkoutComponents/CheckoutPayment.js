@@ -12,12 +12,31 @@ function CheckoutPayment({ amount }) {
   const stripe = useStripe();
   const elements = useElements();
 
-  const [clientSecret, setClientSecret] = useState("");
-  const [id, setId] = useState("");
+  ///////////////////////////// SESSION STORAGE INITIALIZATION //////////////////////////////////
+  function sessionStorageClientSecret() {
+    let storedClientSecret = sessionStorage?.getItem("stripe_clientSecret")
+      ? JSON?.parse(sessionStorage?.getItem("stripe_clientSecret"))
+      : "";
+    return storedClientSecret;
+  }
+
+  function sessionStorageCid() {
+    let storedCid = sessionStorage?.getItem("stripe_id")
+      ? JSON?.parse(sessionStorage?.getItem("stripe_id"))
+      : "";
+    return storedCid;
+  }
+
+  ///////////////////////////// ///////////////////// //////////////////////////////////
+
+  const [clientSecret, setClientSecret] = useState(() => {
+    return sessionStorageClientSecret;
+  });
+  const [cid, setCid] = useState(sessionStorageCid);
   const [disabled, setDisabled] = useState(true);
   const [errorMsg, setErrorMsg] = useState("");
   const [processing, setProcessing] = useState(false);
-  const [success, setSuccess] = useState(false);
+  const [success, setSuccess] = useState("");
 
   ///////////////////////////// GETTING CLIENT SECRET //////////////////////////////////
 
@@ -27,13 +46,13 @@ function CheckoutPayment({ amount }) {
         `/api/payment/create?total=${total * 100}`
       );
       setClientSecret(response.data.clientSecret);
-      setId(response.data.id);
+      setCid(response.data.id);
       //----------------------- SETTING SESSION STORAGE -----------------------
-      sessionStorage.setItem(
+      sessionStorage?.setItem(
         "stripe_clientSecret",
-        JSON.stringify(response.data.clientSecret)
+        JSON?.stringify(response.data.clientSecret)
       );
-      sessionStorage.setItem("stripe_id", JSON.stringify(response.data.id));
+      sessionStorage?.setItem("stripe_id", JSON?.stringify(response.data.id));
     } catch (error) {
       setErrorMsg(error.message);
     }
@@ -41,19 +60,19 @@ function CheckoutPayment({ amount }) {
 
   ///////////////////////////// UPDATING CLIENT SECRET //////////////////////////////////
 
-  async function updateClientSecret(total, id) {
+  async function updateClientSecret(total, cid) {
     try {
       const response = await axios.post(
-        `/api/payment/update?total=${total * 100}&id=${id}`
+        `/api/payment/update?total=${total * 100}&id=${cid}`
       );
       setClientSecret(response.data.clientSecret);
-      setId(response.data.id);
+      setCid(response.data.id);
       //----------------------- SETTING SESSION STORAGE -----------------------
-      sessionStorage.setItem(
+      sessionStorage?.setItem(
         "stripe_clientSecret",
-        JSON.stringify(response.data.clientSecret)
+        JSON?.stringify(response.data.clientSecret)
       );
-      sessionStorage.setItem("stripe_id", JSON.stringify(response.data.id));
+      sessionStorage?.setItem("stripe_id", JSON?.stringify(response.data.id));
     } catch (error) {
       setErrorMsg(error.message);
     }
@@ -63,10 +82,10 @@ function CheckoutPayment({ amount }) {
 
   useEffect(() => {
     if (typeof amount === "number" && amount > 0) {
-      if (clientSecret && id) {
-        updateClientSecret(amount, id);
-      } else {
+      if (sessionStorage?.length === 0) {
         getClientSecret(amount);
+      } else {
+        updateClientSecret(amount, cid);
       }
     }
   }, [amount]);
@@ -113,7 +132,12 @@ function CheckoutPayment({ amount }) {
         .then(({ paymentIntent }) => {
           setErrorMsg(false);
           setProcessing(false);
-          setSuccess(true);
+          setSuccess(paymentIntent.status ? paymentIntent.status : false);
+        })
+        .catch((error) => {
+          setErrorMsg(error ? error.message : false);
+          setProcessing(false);
+          setSuccess(false);
         });
       // history.replace("/paymentConfirm");
     }

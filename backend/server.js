@@ -51,9 +51,9 @@ app.post(
   "/api/payment/update",
   expressAsyncHandler(async (request, response) => {
     const total = request.query.total;
-    const id = request.query.id;
+    const cid = request.query.id;
 
-    const paymentIntent = await stripeSecretPromise.paymentIntents.update(id, {
+    const paymentIntent = await stripeSecretPromise.paymentIntents.update(cid, {
       amount: total,
       currency: "inr",
       payment_method_types: ["card"],

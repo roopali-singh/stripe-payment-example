@@ -60,18 +60,21 @@ function Home() {
   useEffect(() => {
     if (location?.state && location?.state?.success) {
       const searchState = location?.state?.success;
-      if (searchState === "true") {
+      if (searchState === "succeeded") {
         paymentConfirm();
         //----------------- REMOVING SESSION STORAGE ------------------
         sessionStorage.removeItem("stripe_clientSecret");
-        sessionStorage.removeItem("id");
+        sessionStorage.removeItem("stripe_id");
       } else {
+        //----------------- REMOVING SESSION STORAGE ------------------
+        sessionStorage.removeItem("stripe_clientSecret");
+        sessionStorage.removeItem("stripe_id");
         paymentFailed();
       }
     }
   }, [location, location?.state]);
 
-  //////////// REMOVING LOCATIN STATE on REFRESH ///////////////////
+  //////////// REMOVING LOCATION STATE on REFRESH ///////////////////
 
   useEffect(() => {
     const handleReload = (event) => {
