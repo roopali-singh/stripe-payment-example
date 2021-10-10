@@ -99,6 +99,21 @@ function CheckoutPayment({ amount }) {
     }
   }, [success, history]);
 
+  ////////////////////// AFTER PAYMENT SUBMISSION -- STOP PAGE TRAVERSING ///////////////////////////
+
+  useEffect(() => {
+    const handleReload = (event) => {
+      if (processing === true) {
+        event.preventDefault();
+        // event.returnValue = "";
+      }
+    };
+    window.addEventListener("beforeunload", handleReload);
+    return () => {
+      window.removeEventListener("beforeunload", handleReload);
+    };
+  }, [location, location?.state, history]);
+
   ///////////////////////////// PAYMENT CHANGE HANDLER //////////////////////////////////
 
   function handleChange(event) {
