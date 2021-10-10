@@ -12,31 +12,33 @@ function CheckoutPayment({ amount }) {
   const stripe = useStripe();
   const elements = useElements();
 
-  ///////////////////////////// SESSION STORAGE INITIALIZATION //////////////////////////////////
-  function sessionStorageClientSecret() {
-    let storedClientSecret = sessionStorage?.getItem("stripe_clientSecret")
-      ? JSON?.parse(sessionStorage?.getItem("stripe_clientSecret"))
-      : "";
-    return storedClientSecret;
-  }
-
-  function sessionStorageCid() {
-    let storedCid = sessionStorage?.getItem("stripe_id")
-      ? JSON?.parse(sessionStorage?.getItem("stripe_id"))
-      : "";
-    return storedCid;
-  }
-
-  ///////////////////////////// ///////////////////// //////////////////////////////////
-
-  const [clientSecret, setClientSecret] = useState(() => {
-    return sessionStorageClientSecret;
-  });
-  const [cid, setCid] = useState(sessionStorageCid);
+  const [clientSecret, setClientSecret] = useState("");
+  const [cid, setCid] = useState("");
   const [disabled, setDisabled] = useState(true);
   const [errorMsg, setErrorMsg] = useState("");
   const [processing, setProcessing] = useState(false);
   const [success, setSuccess] = useState("");
+
+  ///////////////////////////// SESSION STORAGE INITIALIZATION //////////////////////////////////
+
+  function sessionStorageClientSecret() {
+    let storedClientSecret = sessionStorage?.getItem("stripe_clientSecret")
+      ? JSON?.parse(sessionStorage?.getItem("stripe_clientSecret"))
+      : "";
+    setClientSecret(storedClientSecret);
+  }
+
+  function sessionStorageCid() {
+    let storedCid = sessionStorage?.getItem("stripe_cid")
+      ? JSON?.parse(sessionStorage?.getItem("stripe_cid"))
+      : "";
+    setCid(storedCid);
+  }
+
+  useEffect(() => {
+    sessionStorageClientSecret();
+    sessionStorageCid();
+  }, []);
 
   ///////////////////////////// GETTING CLIENT SECRET //////////////////////////////////
 
@@ -52,7 +54,7 @@ function CheckoutPayment({ amount }) {
         "stripe_clientSecret",
         JSON?.stringify(response.data.clientSecret)
       );
-      sessionStorage?.setItem("stripe_id", JSON?.stringify(response.data.id));
+      sessionStorage?.setItem("stripe_cid", JSON?.stringify(response.data.id));
     } catch (error) {
       setErrorMsg(error.message);
     }
@@ -72,7 +74,7 @@ function CheckoutPayment({ amount }) {
         "stripe_clientSecret",
         JSON?.stringify(response.data.clientSecret)
       );
-      sessionStorage?.setItem("stripe_id", JSON?.stringify(response.data.id));
+      sessionStorage?.setItem("stripe_cid", JSON?.stringify(response.data.id));
     } catch (error) {
       setErrorMsg(error.message);
     }
@@ -101,15 +103,12 @@ function CheckoutPayment({ amount }) {
 
   ////////////////////// AFTER PAYMENT SUBMISSION -- STOP PAGE TRAVERSING ///////////////////////////
 
-  const handleReload = useCallback(
-    (event) => {
-      if (processing === true) {
-        event.preventDefault();
-        event.returnValue = "";
-      }
-    },
-    [processing]
-  );
+  const handleReload = (event) => {
+    if (processing === true) {
+      event.preventDefault();
+      event.returnValue = "";
+    }
+  };
 
   useEffect(() => {
     window.addEventListener("beforeunload", handleReload);

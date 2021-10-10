@@ -64,11 +64,11 @@ function Home() {
         paymentConfirm();
         //----------------- REMOVING SESSION STORAGE ------------------
         sessionStorage.removeItem("stripe_clientSecret");
-        sessionStorage.removeItem("stripe_id");
+        sessionStorage.removeItem("stripe_cid");
       } else {
         //----------------- REMOVING SESSION STORAGE ------------------
         sessionStorage.removeItem("stripe_clientSecret");
-        sessionStorage.removeItem("stripe_id");
+        sessionStorage.removeItem("stripe_cid");
         paymentFailed();
       }
     }
