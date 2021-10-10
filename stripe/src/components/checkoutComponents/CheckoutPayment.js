@@ -105,7 +105,7 @@ function CheckoutPayment({ amount }) {
     (event) => {
       if (processing === true) {
         event.preventDefault();
-        // event.returnValue = "";
+        event.returnValue = "";
       }
     },
     [processing]
