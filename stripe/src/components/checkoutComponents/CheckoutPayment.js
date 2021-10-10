@@ -88,7 +88,7 @@ function CheckoutPayment({ amount }) {
         updateClientSecret(amount, cid);
       }
     }
-  }, [amount, cid]);
+  }, [amount]);
 
   ///////////////////////////// AFTER PAYMENT SUBMISSION //////////////////////////////////
 
