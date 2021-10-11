@@ -101,7 +101,7 @@ function CheckoutPayment({ amount }) {
     }
   }, [success, history]);
 
-  ////////////////////// AFTER PAYMENT SUBMISSION -- STOP PAGE TRAVERSING ///////////////////////////
+  ////////////////////// DURING PAYMENT SUBMISSION -- STOP PAGE TRAVERSING ///////////////////////////
 
   const handleReload = (event) => {
     if (processing === true) {
