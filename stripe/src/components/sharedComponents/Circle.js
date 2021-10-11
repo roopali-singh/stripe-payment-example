@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "../../stylesheets/sharedStylesheet/circle.scss";
 
 function Circle({ circleImg, homeCircle, checkoutCircle }) {
   return (
     <div
+      id="homeCircle_width"
       className={`${homeCircle && "homeCircle"} ${
         checkoutCircle && "checkoutCircle"
       }`}

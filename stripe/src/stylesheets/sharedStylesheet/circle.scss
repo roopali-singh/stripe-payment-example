@@ -3,9 +3,10 @@
   min-width: 70px;
   height: auto;
   position: absolute;
-  left: 45%;
+  left: 50%;
+  margin-left: -5%;
   bottom: -10vh;
-  // bottom: -22%;
+  /* // bottom: -22%; */
 }
 
 .checkoutCircle {
@@ -23,6 +24,12 @@
 
 .homeCircle__img {
   box-shadow: 5px 5px 100px 1px black;
+}
+
+@media only screen and (max-width: 699px) {
+  .homeCircle {
+    margin-left: -35px;
+  }
 }
 
 @media only screen and (max-width: 1000px) {

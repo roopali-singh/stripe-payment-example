@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import "../../stylesheets/checkoutStylesheet/checkoutPayment.scss";
 // import Button from "../sharedComponents/Button";
@@ -100,22 +100,6 @@ function CheckoutPayment({ amount }) {
       history.replace({ pathname: "/", state: { success: `${success}` } });
     }
   }, [success, history]);
-
-  ////////////////////// DURING PAYMENT SUBMISSION -- STOP PAGE TRAVERSING ///////////////////////////
-
-  const handleReload = (event) => {
-    if (processing === true) {
-      event.preventDefault();
-      event.returnValue = "";
-    }
-  };
-
-  useEffect(() => {
-    window.addEventListener("beforeunload", handleReload);
-    return () => {
-      window.removeEventListener("beforeunload", handleReload);
-    };
-  }, [handleReload]);
 
   ///////////////////////////// PAYMENT CHANGE HANDLER //////////////////////////////////
 
