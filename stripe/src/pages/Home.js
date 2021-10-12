@@ -20,10 +20,19 @@ Home
 */
 
 function Home() {
-  ///////// FOR SUCCESSFUL PAYMENTS NOTIFICATION /////////////
+  ///////// FOR PAYMENTS STATUS NOTIFICATION /////////////
 
   const location = useLocation();
   const history = useHistory();
+
+  //--------------------- CHECKING YOUR DEVICE --------------------------//
+
+  var isOnIOS =
+    navigator.userAgent.match(/iPad/i) ||
+    navigator.userAgent.match(/iPhone/i);
+  var eventName = isOnIOS ? "pagehide" : "beforeunload";
+
+  //--------------- PAYMENT CONFIRM OR FAILED SCENARIOS ------------------//
 
   function paymentConfirm() {
     toast.success("Payment Successful!", {
@@ -55,26 +64,30 @@ function Home() {
     });
   }
 
-  //////////////////// CHECKING LOCATION STATE ////////////////////////
+  //-------------------------- CHECKING LOCATION STATE -----------------------------//
 
   useEffect(() => {
     if (location?.state && location?.state?.success) {
       const searchState = location?.state?.success;
+
       if (searchState === "succeeded") {
         paymentConfirm();
         //----------------- REMOVING SESSION STORAGE ------------------
+
         sessionStorage.removeItem("stripe_clientSecret");
         sessionStorage.removeItem("stripe_cid");
       } else {
+        paymentFailed();
+
         //----------------- REMOVING SESSION STORAGE ------------------
+
         sessionStorage.removeItem("stripe_clientSecret");
         sessionStorage.removeItem("stripe_cid");
-        paymentFailed();
       }
     }
   }, [location, location?.state]);
 
-  //////////// REMOVING LOCATION STATE on REFRESH ///////////////////
+  //--------------------------- REMOVING LOCATION STATE on REFRESH -------------------//
 
   const handleReload = (event) => {
     if (location?.state && location?.state?.success) {
@@ -84,10 +97,13 @@ function Home() {
     }
   };
 
+  //----------- EVENT-LISTENER FOR 'beforeunload' || 'pagehide' -----------------
+
   useEffect(() => {
-    window.addEventListener("beforeunload", handleReload);
+    window.addEventListener(eventName, handleReload);
+
     return () => {
-      window.removeEventListener("beforeunload", handleReload);
+      window.removeEventListener(eventName, handleReload);
     };
   }, [location, location?.state, history]);
 

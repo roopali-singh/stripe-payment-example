@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import "../../stylesheets/sharedStylesheet/circle.scss";
 
 function Circle({ circleImg, homeCircle, checkoutCircle }) {

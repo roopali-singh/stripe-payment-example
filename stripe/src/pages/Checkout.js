@@ -10,6 +10,7 @@ Checkout
     -- checkoutHeader__para
     -- Circle
   - CheckoutDetails
+    -- CheckoutPayment
 */
 
 function Checkout() {
