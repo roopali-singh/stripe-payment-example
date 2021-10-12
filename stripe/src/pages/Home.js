@@ -28,9 +28,7 @@ function Home() {
   //--------------------- CHECKING YOUR DEVICE --------------------------//
 
   var isOnIOS =
-    // navigator.userAgent.match(/Safari/) ||
-    navigator.userAgent.match(/iPad/i) ||
-    navigator.userAgent.match(/iPhone/i);
+    navigator.userAgent.match(/iPad/i) || navigator.userAgent.match(/iPhone/i);
   var eventName = isOnIOS ? "pagehide" : "beforeunload";
 
   //--------------- PAYMENT CONFIRM OR FAILED SCENARIOS ------------------//
