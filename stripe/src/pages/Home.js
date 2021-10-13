@@ -25,6 +25,13 @@ function Home() {
   const location = useLocation();
   const history = useHistory();
 
+  // //--------------------- CHECKING YOUR DEVICE --------------------------//
+
+  // var isOnIOS =
+  //   // navigator.userAgent.match(/Safari/) ||
+  //   navigator.userAgent.match(/iPad/i) || navigator.userAgent.match(/iPhone/i);
+  // var eventName = isOnIOS ? "pagehide" : "beforeunload";
+
   //--------------- PAYMENT CONFIRM OR FAILED SCENARIOS ------------------//
 
   function paymentConfirm() {
@@ -93,10 +100,10 @@ function Home() {
   //----------- EVENT-LISTENER FOR 'beforeunload' || 'pagehide' -----------------
 
   useEffect(() => {
-    window.addEventListener(eventName, handleReload);
+    window.addEventListener("beforeunload", handleReload);
 
     return () => {
-      window.removeEventListener(eventName, handleReload);
+      window.removeEventListener("beforeunload", handleReload);
     };
   }, [location, location?.state, history]);
 
