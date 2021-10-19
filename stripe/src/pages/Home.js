@@ -47,11 +47,46 @@ function Home() {
         secondary: "#FFFAEE",
       },
     });
+
+    toast(
+      (t) => (
+        <main className="homeToast_refund_main">
+          <section>
+            <b>For Refund</b>
+          </section>
+          <section className="homeToast_refund_btn--section">
+            <button
+              className="homeToast_refund_btn"
+              onClick={() => toast.dismiss(t.id)}
+            >
+              Contact
+            </button>
+            <button
+              className="homeToast_refund_btn"
+              onClick={() => toast.dismiss(t.id)}
+            >
+              Dismiss
+            </button>
+          </section>
+        </main>
+      ),
+      {
+        duration: 10000,
+        style: {
+          border: "1px solid #713200",
+          padding: "16px",
+          color: "#713200",
+        },
+        iconTheme: {
+          primary: "green",
+          secondary: "#FFFAEE",
+        },
+      }
+    );
   }
 
   function paymentFailed() {
     toast.error("Payment Failed!", {
-      duration: 4000,
       style: {
         border: "1px solid rgb(207, 66, 66)",
         padding: "16px",
@@ -99,13 +134,13 @@ function Home() {
 
   //----------- EVENT-LISTENER FOR 'beforeunload' || 'pagehide' -----------------
 
-  useEffect(() => {
-    window.addEventListener("beforeunload", handleReload);
+  // useEffect(() => {
+  //   window.addEventListener("beforeunload", handleReload);
 
-    return () => {
-      window.removeEventListener("beforeunload", handleReload);
-    };
-  }, [location, location?.state, history]);
+  //   return () => {
+  //     window.removeEventListener("beforeunload", handleReload);
+  //   };
+  // }, [location, location?.state, history]);
 
   //////////////////////////////////////////////////////////
 

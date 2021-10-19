@@ -3,3 +3,26 @@
   flex-direction: column;
   align-items: center;
 }
+
+.homeToast_refund_btn {
+  padding: 8%;
+  margin: 8%;
+  border-radius: 3px;
+  border: 1px solid #713200;
+  // color: #713200;
+  background-color: #e9e8e8;
+}
+
+.homeToast_refund_main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.homeToast_refund_btn--section {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  justify-content: center;
+}
