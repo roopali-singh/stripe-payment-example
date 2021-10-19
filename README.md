@@ -18,6 +18,6 @@ Tech stack used:
 
 > :credit_card: Enter the real account details for testing.
 
-> :e-mail: Just drop a mail for refund at [roopali](mailto:roopali.singh.222@gmail.com?subject=[Github]%20moon_sand%20REFUND&body=I%20am%20%0ARefund%20amount%20%3d%3e%20)
+> :e-mail: Just drop a mail for refund at [roopali](mailto:roopali.singh.222@gmail.com?subject=[Github]%20moon_clock%20REFUND&body=I%20am%20%0ARefund%20amount%20%28in%20INR%29%20%3d%3e%20%28₹%29)
 
 ###### The UI was inspired by [patreon](https://www.patreon.com/)

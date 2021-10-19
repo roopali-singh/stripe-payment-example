@@ -20,6 +20,13 @@ Home
 */
 
 function Home() {
+  ///////// FOR PAYMENT REFUND MAIL FUNCTION VARIBLES /////////////
+
+  let refundMailRecipient = "roopali.singh.222@gmail.com";
+  let refundMailSubject = "[MoonClock]%20moon_clock%20REFUND";
+  let refundMailBody =
+    "I%20am%20%0ARefund%20amount%20%28in%20INR%29%20%3d%3e%20%28₹%29";
+
   ///////// FOR PAYMENTS STATUS NOTIFICATION /////////////
 
   const location = useLocation();
@@ -33,9 +40,12 @@ function Home() {
   // var eventName = isOnIOS ? "pagehide" : "beforeunload";
 
   //--------------- PAYMENT REFUND FUNCTION ------------------//
+
   function paymentRefund() {
-    alert("Going ahead will refund your amount");
-    
+    window.open(
+      `https://mail.google.com/mail/u/0/?fs=1&tf=cm&source=mailto&to=${refundMailRecipient}&su=${refundMailSubject}&body=${refundMailBody}`,
+      "_blank"
+    );
   }
 
   //--------------- PAYMENT CONFIRM OR FAILED SCENARIOS ------------------//
@@ -141,13 +151,13 @@ function Home() {
 
   //----------- EVENT-LISTENER FOR 'beforeunload' || 'pagehide' -----------------
 
-  useEffect(() => {
-    window.addEventListener("beforeunload", handleReload);
+  // useEffect(() => {
+  //   window.addEventListener("beforeunload", handleReload);
 
-    return () => {
-      window.removeEventListener("beforeunload", handleReload);
-    };
-  }, [location, location?.state, history]);
+  //   return () => {
+  //     window.removeEventListener("beforeunload", handleReload);
+  //   };
+  // }, [location, location?.state, history]);
 
   //////////////////////////////////////////////////////////
 
