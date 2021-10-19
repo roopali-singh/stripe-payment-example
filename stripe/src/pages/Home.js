@@ -32,6 +32,12 @@ function Home() {
   //   navigator.userAgent.match(/iPad/i) || navigator.userAgent.match(/iPhone/i);
   // var eventName = isOnIOS ? "pagehide" : "beforeunload";
 
+  //--------------- PAYMENT REFUND FUNCTION ------------------//
+  function paymentRefund() {
+    alert("Going ahead will refund your amount");
+    
+  }
+
   //--------------- PAYMENT CONFIRM OR FAILED SCENARIOS ------------------//
 
   function paymentConfirm() {
@@ -48,6 +54,7 @@ function Home() {
       },
     });
 
+    //--------------- PAYMENT REFUND TOAST ------------------//
     toast(
       (t) => (
         <main className="homeToast_refund_main">
@@ -57,7 +64,7 @@ function Home() {
           <section className="homeToast_refund_btn--section">
             <button
               className="homeToast_refund_btn"
-              onClick={() => toast.dismiss(t.id)}
+              onClick={() => paymentRefund()}
             >
               Contact
             </button>
@@ -134,13 +141,13 @@ function Home() {
 
   //----------- EVENT-LISTENER FOR 'beforeunload' || 'pagehide' -----------------
 
-  // useEffect(() => {
-  //   window.addEventListener("beforeunload", handleReload);
+  useEffect(() => {
+    window.addEventListener("beforeunload", handleReload);
 
-  //   return () => {
-  //     window.removeEventListener("beforeunload", handleReload);
-  //   };
-  // }, [location, location?.state, history]);
+    return () => {
+      window.removeEventListener("beforeunload", handleReload);
+    };
+  }, [location, location?.state, history]);
 
   //////////////////////////////////////////////////////////
 
